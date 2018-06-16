@@ -1,4 +1,5 @@
 import express from 'express';
+import StudentRoute from './routes/StudentRoute';
 import students from './data/students.json';
 import _ from 'lodash';
 
@@ -8,32 +9,16 @@ const server = express();
 const buildUrl = (version, path) => `/api/${version}/${path}`;
 const STUDENTS_BASE_URL = buildUrl('v1','students');
 
-server.get(STUDENTS_BASE_URL,(req, res)=> {
-    res.json(students);
-});
+server.use(STUDENTS_BASE_URL, StudentRoute);
 
-server.get(`${STUDENTS_BASE_URL}/:id`, (req,res) => {
-    const student = _.find(students, student => student.id === req.params.id);
-    if (student) {
-        res.json(student);
-    }else {
-        res.send(`User ${req.params.id} not found`);
-    }
-})
-
-
-
-
-server.post(STUDENTS_BASE_URL, (req,res) => {
-    console.log("handling POST request...");
-});
-
-server.put(STUDENTS_BASE_URL, (req,res) => {
-    console.log("handling PUT request...");
-});
-
-server.delete(STUDENTS_BASE_URL, (req,res) => {
-    console.log("handling DELETE request...");
+server.get('/route-handlers', (req, res, next) => {
+    res.send("Learning route handlers is cool");
+    next();
+},(req, res, next) => {
+    console.log("Second Handler");
+    next();
+},(req, res) => {
+    console.log("Third Handler ");
 });
 
 server.listen(PORT, ()=> {
