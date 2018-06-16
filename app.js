@@ -1,10 +1,13 @@
 import express from 'express';
+import morgan from 'morgan';
 import StudentRoute from './routes/StudentRoute';
 import students from './data/students.json';
 import _ from 'lodash';
 
 const PORT = 3000;
 const server = express();
+
+server.use(morgan('tiny'));
 
 const buildUrl = (version, path) => `/api/${version}/${path}`;
 const STUDENTS_BASE_URL = buildUrl('v1','students');
