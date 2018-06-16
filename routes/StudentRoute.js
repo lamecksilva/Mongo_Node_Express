@@ -28,4 +28,11 @@ router.delete('/', (req,res) => {
     console.log("handling DELETE request...");
 });
 
+router.param('id', (req, res, next, id) => {
+    if (isNaN(id)) {
+        next(`${id} is not a valid number`);
+    }
+    next();
+})
+
 module.exports = router;
