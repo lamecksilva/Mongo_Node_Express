@@ -1,0 +1,23 @@
+{
+  "name": "mongo_node_express",
+  "version": "1.0.0",
+  "description": "Learning node and express",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lamecksilva/Mongo_Node_Express.git"
+  },
+  "keywords": [
+    "Nodejs"
+  ],
+  "author": "Lameck",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lamecksilva/Mongo_Node_Express/issues"
+  },
+  "homepage": "https://github.com/lamecksilva/Mongo_Node_Express#readme"
+}
