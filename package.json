@@ -4,7 +4,7 @@
   "description": "Learning node and express",
   "main": "app.js",
   "scripts": {
-    "start": "node ./app.js",
+    "start": "node ./app.js --exec babel-node -e js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +19,10 @@
   "bugs": {
     "url": "https://github.com/lamecksilva/Mongo_Node_Express/issues"
   },
-  "homepage": "https://github.com/lamecksilva/Mongo_Node_Express#readme"
+  "homepage": "https://github.com/lamecksilva/Mongo_Node_Express#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1"
+  }
 }

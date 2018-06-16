@@ -1,1 +1,2 @@
-console.log("Hello World with Node.js & Express");
+const message = "Hello World with Node.js & Express";
+console.log(message);
