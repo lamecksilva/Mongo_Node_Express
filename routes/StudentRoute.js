@@ -1,9 +1,25 @@
 import express from 'express';
 import students from '../data/students.json';
 import _ from 'lodash';
+import mongoose from 'mongoose';
+
+
+const DB_USER = 'lameck';
+const DB_USER_PASSWORD = 'JABUTICABA1';
+const DB_URL = `mongodb://${DB_USER}:${DB_USER_PASSWORD}@ds263460.mlab.com:63460/lameck01`
+
+
 const router = express.Router();
 
 let studentsArray = students;
+
+mongoose.connect(DB_URL);
+const db = mongoose.connection;
+
+
+db.once('open', ()=>{
+    console.log("Hooray we connected to mlab");
+});
 
 
 router.get('/',(req, res)=> {
