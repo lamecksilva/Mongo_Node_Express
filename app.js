@@ -13,10 +13,21 @@ server.use(morgan('tiny'));
 server.use(bodyParser.json());
 server.use('/static', express.static('public'));
 
+
+server.set('views', path.join('views'));
+server.set('view engine', 'ejs');
+
+
 const buildUrl = (version, path) => `/api/${version}/${path}`;
 const STUDENTS_BASE_URL = buildUrl('v1','students');
 
 server.use(STUDENTS_BASE_URL, StudentRoute);
+
+server.get('/',(req,res) => {
+    res.render('index', {
+        students
+    });
+});
 
 server.get('/download/images/:imageName', (req, res) => {
     res.download(path.join('public', 'images', req.params.imageName));
