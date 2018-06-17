@@ -18,14 +18,18 @@ router.get('/:id', (req,res) => {
 
 router.post('/', (req,res) => {
     console.log("handling POST request...");
+    console.log(req.body);
+    res.end();
 });
 
 router.put('/', (req,res) => {
     console.log("handling PUT request...");
+    res.end();
 });
 
 router.delete('/', (req,res) => {
     console.log("handling DELETE request...");
+    res.end();
 });
 
 router.param('id', (req, res, next, id) => {
