@@ -3,12 +3,15 @@ import students from '../data/students.json';
 import _ from 'lodash';
 const router = express.Router();
 
+let studentsArray = students;
+
+
 router.get('/',(req, res)=> {
-    res.json(students);
+    res.json(studentsArray);
 });
 
 router.get('/:id', (req,res) => {
-    const student = _.find(students, student => student.id === req.params.id);
+    const student = _.find(studentsArray, student => student.id === req.params.id);
     if (student) {
         res.json(student);
     }else {
@@ -19,7 +22,8 @@ router.get('/:id', (req,res) => {
 router.post('/', (req,res) => {
     console.log("handling POST request...");
     console.log(req.body);
-    res.end();
+    studentsArray.push(req.body);
+    res.status(200).send("OK");
 });
 
 router.put('/', (req,res) => {
