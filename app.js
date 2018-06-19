@@ -48,4 +48,4 @@ server.get('/route-handlers', (req, res, next) => {
 
 server.listen(PORT, ()=> {
     console.log(`Server started on ${PORT}`);
-})
+});
