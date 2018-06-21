@@ -28,42 +28,89 @@ const StudentSchema = mongoose.Schema({
     course: String
 });
 
+const StudentModel = mongoose.model('Student', StudentSchema);
 
 router.get('/',(req, res)=> {
-    res.json(studentsArray);
+    // res.json(studentsArray);
+    StudentModel.find((err, students) => {
+        if(err) res.status(500).send(err);
+        res.json(students);
+    });
 });
 
 router.get('/:id', (req,res) => {
+    /*
     const student = _.find(studentsArray, student => student.id === req.params.id);
     if (student) {
         res.json(student);
     }else {
         res.send(`User ${req.params.id} not found`);
     }
+    */
+
+    StudentModel.findById(req.params.id, (err, student) =>{
+        if (err) res.status(500).send(err);
+        if (student) {
+            res.json(student);
+        }else {
+            res.status(404).send(`User ${req.params.id} not found`);
+        }
+    });
 });
 
 router.post('/', (req,res) => {
+    /*
     console.log("handling POST request...");
     console.log(req.body);
     studentsArray.push(req.body);
     res.status(200).send("OK");
+    */
+
+    const id = new mongoose.Types.ObjectId();
+    const studentToPersist = Object.assign({
+        _id: id 
+    }, req.body);
+    console.log(JSON.stringify(studentToPersist));
+
+    const student = new StudentModel(studentToPersist);
+
+    student.save().then((err, student) => {
+        if(err) res.status(500).send(err);
+        res.json(student);
+    })
+    
 });
 
-router.put('/', (req,res) => {
-    console.log("handling PUT request...");
-    res.end();
+router.put('/:id', (req,res) => {
+    StudentModel.findById(req.params.id, (err, student) => { //Find a student whit specific ID
+        if(err) res.status(500).send(err);  // If err, show err;
+        if (student) {
+            student.name = req.body.name;       // Else, update the name, and his course
+            student.course = req.body.course;
+            student.save().then((err, student) => {     // Save the changes
+                if (err) res.status(500).send(err);
+                res.json(student);
+           });
+        } else {
+            res.status(404).send(`User with id ${req.params.id} not found`);
+        }
+    });
 });
 
-router.delete('/', (req,res) => {
-    console.log("handling DELETE request...");
-    res.end();
+router.delete('/:id', (req,res) => {
+    StudentModel.findByIdAndRemove(req.params.id, (err, student) => {
+        if (err) res.status(500).send(err);
+        res.status(200).send(`Student with id ${req.params.id} was deleted`);
+    });
 });
 
+/*
 router.param('id', (req, res, next, id) => {
     if (isNaN(id)) {
         next(`${id} is not a valid number`);
     }
     next();
-})
+});
+*/
 
 module.exports = router;
