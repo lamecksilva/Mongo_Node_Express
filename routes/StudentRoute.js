@@ -1,7 +1,7 @@
 import express from 'express';
 import students from '../data/students.json';
 import _ from 'lodash';
-import mongoose from 'mongoose';
+import mongoose, { mongo } from 'mongoose';
 
 
 const DB_USER = 'lameck';
@@ -19,6 +19,13 @@ const db = mongoose.connection;
 
 db.once('open', ()=>{
     console.log("Hooray we connected to mlab");
+});
+
+
+const StudentSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    name: String,
+    course: String
 });
 
 
